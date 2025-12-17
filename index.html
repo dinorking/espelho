@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Espelho</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0f0f0f;
+      color: #eaeaea;
+      margin: 0;
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      max-width: 700px;
+      width: 100%;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    p.subtitle {
+      color: #999;
+      margin-bottom: 24px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 140px;
+      background: #1a1a1a;
+      color: #eaeaea;
+      border: 1px solid #333;
+      padding: 12px;
+      font-size: 15px;
+      resize: vertical;
+    }
+
+    button {
+      margin-top: 16px;
+      padding: 10px 18px;
+      background: #eaeaea;
+      color: #0f0f0f;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    pre {
+      margin-top: 32px;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      padding: 16px;
+      white-space: pre-wrap;
+      font-family: inherit;
+    }
+
+    .footer {
+      margin-top: 40px;
+      font-size: 12px;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+    <div class="container" id="login">
+  <h1>Espelho</h1>
+  <p class="subtitle">
+    Acesso restrito. Entre para continuar.
+  </p>
+
+  <input
+    id="email"
+    type="email"
+    placeholder="Email"
+    style="
+      width:100%;
+      padding:12px;
+      margin-bottom:12px;
+      background:#1a1a1a;
+      color:#eaeaea;
+      border:1px solid #333;
+      font-size:15px;
+    "
+  />
+
+  <input
+    type="password"
+    placeholder="Senha"
+    style="
+      width:100%;
+      padding:12px;
+      background:#1a1a1a;
+      color:#eaeaea;
+      border:1px solid #333;
+      font-size:15px;
+    "
+  />
+
+  <button id="loginBtn" style="margin-top:16px;">
+    Entrar
+  </button>
+
+  <div class="footer">
+    Acesso interno · MVP
+  </div>
+</div>
+
+  <div class="container" id="app" style="display:none;">
+
+
+    <h1>Espelho</h1>
+<p class="subtitle">
+  O que você escolheu fazer ou não fazer hoje, mesmo sabendo o custo?
+</p>
+
+
+    <textarea id="input" placeholder="Relato do dia. Sem explicar. Sem justificar."></textarea>
+
+    <button id="analyzeBtn">Analisar</button>
+
+    <pre id="output" style="display:none;"></pre>
+
+    <div class="footer">
+      Não é terapia. Não é conselho. É clareza.
+    </div>
+  </div>
+
+  <script>
+    const login = document.getElementById("login");
+const app = document.getElementById("app");
+const loginBtn = document.getElementById("loginBtn");
+
+loginBtn.addEventListener("click", () => {
+  login.style.display = "none";
+  app.style.display = "block";
+});
+
+    const btn = document.getElementById("analyzeBtn");
+    const input = document.getElementById("input");
+    const output = document.getElementById("output");
+
+    btn.addEventListener("click", async () => {
+      const text = input.value.trim();
+      if (!text) return;
+
+      btn.disabled = true;
+      btn.textContent = "Analisando...";
+      output.style.display = "none";
+
+      try {
+        const res = await fetch("http://localhost:3000/analyze", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ text })
+        });
+
+        const data = await res.json();
+        output.textContent = data.result;
+        output.style.display = "block";
+      } catch (err) {
+        output.textContent = "Erro ao analisar.";
+        output.style.display = "block";
+      }
+
+      btn.disabled = false;
+      btn.textContent = "Analisar";
+    });
+  </script>
+</body>
+</html>
