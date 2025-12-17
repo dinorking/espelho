@@ -118,21 +118,14 @@ app.post("/analyze", async (req, res) => {
   }
 
   try {
-    const response = await openai.responses.create({
+  const response = await openai.responses.create({
   model: "gpt-4o-mini",
-  input: [
-    {
-      role: "system",
-      content: SYSTEM_PROMPT
-    },
-    {
-      role: "user",
-      content: text
-    }
-  ]
+  input: `${SYSTEM_PROMPT}\n\nRelato:\n${text}`
 });
 
 const result = response.output_text;
+console.log("OPENAI RESPONSE:", response);
+
 
 
     res.json({ result });
