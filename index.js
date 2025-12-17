@@ -1,3 +1,9 @@
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 import express from "express";
 import OpenAI from "openai";
 
@@ -95,11 +101,6 @@ A Sentença final deve soar como algo que ninguém diria em voz alta para evitar
 <uma frase curta que encerre qualquer justificativa restante>
 
 `;
-import path from "path";
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
