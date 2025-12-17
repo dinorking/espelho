@@ -118,31 +118,32 @@ app.post("/analyze", async (req, res) => {
   }
 
   try {
-    const completion = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [
-        {
-          role: "system",
-          content: SYSTEM_PROMPT
-        },
-        {
-          role: "user",
-          content: text
-        }
-      ],
-      temperature: 0.3
-    });
+    const response = await openai.responses.create({
+  model: "gpt-4o-mini",
+  input: [
+    {
+      role: "system",
+      content: SYSTEM_PROMPT
+    },
+    {
+      role: "user",
+      content: text
+    }
+  ]
+});
 
-    const result = completion.choices[0].message.content;
+const result = response.output_text;
+
 
     res.json({ result });
 
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      error: "Erro ao chamar a OpenAI"
-    });
-  }
+  console.error("ERRO OPENAI:", error);
+  res.status(500).json({
+    error: error.message || "Erro ao chamar a OpenAI"
+  });
+}
+
 });
 
 // Inicializa o servidor
