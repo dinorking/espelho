@@ -108,20 +108,13 @@ app.get("/", (req, res) => {
 
 // Endpoint principal
 app.post("/analyze", async (req, res) => {
-  const { text } = req.body;
+  console.log("CHEGOU NO /analyze");
 
-  // Validação básica
-  if (!text || typeof text !== "string") {
-    return res.status(400).json({
-      error: "Campo 'text' é obrigatório e deve ser uma string"
-    });
-  }
-
-  try {
-  const response = await openai.responses.create({
-  model: "gpt-4o-mini",
-  input: `${SYSTEM_PROMPT}\n\nRelato:\n${text}`
+  res.json({
+    result: "ROTA /analyze FUNCIONANDO"
+  });
 });
+
 
 const result = response.output_text;
 console.log("OPENAI KEY PRESENT:", !!process.env.OPENAI_API_KEY);
@@ -130,18 +123,10 @@ console.log("OPENAI KEY PRESENT:", !!process.env.OPENAI_API_KEY);
 
     res.json({ result });
 
-} catch (error) {
-  console.error("ERRO OPENAI RAW:", error);
-  res.status(500).json({
-    error: String(error)
-  });
-}
 
-
-});
 
 // Inicializa o servidor
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log(`Servidor ONLINE na porta ${PORT}`);
