@@ -124,18 +124,19 @@ app.post("/analyze", async (req, res) => {
 });
 
 const result = response.output_text;
-console.log("OPENAI RESPONSE:", response);
+console.log("OPENAI KEY PRESENT:", !!process.env.OPENAI_API_KEY);
 
 
 
     res.json({ result });
 
-  } catch (error) {
-  console.error("ERRO OPENAI:", error);
+} catch (error) {
+  console.error("ERRO OPENAI RAW:", error);
   res.status(500).json({
-    error: error.message || "Erro ao chamar a OpenAI"
+    error: String(error)
   });
 }
+
 
 });
 
