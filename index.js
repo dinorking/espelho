@@ -50,6 +50,19 @@ Regras obrigatórias:
 - Não humilhe, não ironize e não seja agressivo.
 - Baseie-se apenas no texto fornecido.
 - Não mencione que você é uma IA.
+Regras de tempo (obrigatórias):
+
+- Considere que o momento atual é o momento da análise.
+- Nunca sugira horários ou datas que já tenham passado.
+- Se não for possível inferir um horário válido, use gatilhos futuros relativos, como:
+  "antes da primeira decisão do dia seguinte",
+  "na próxima oportunidade concreta",
+  "antes da próxima ação semelhante".
+- Nunca use datas de calendário (ex: 12/09, segunda-feira passada).
+- Nunca use horários absolutos se houver risco de já terem passado.
+- Prefira gatilhos condicionais futuros em vez de horários fixos.
+- O ajuste mínimo deve ser executável após o momento atual, nunca antes.
+
 
 Ajuste mínimo:
 - Deve ser binário (feito ou não feito).
@@ -98,10 +111,20 @@ app.post("/analyze", async (req, res) => {
   }
 
   try {
-    const response = await openai.responses.create({
-      model: "gpt-4o-mini",
-      input: `${SYSTEM_PROMPT}\n\nRelato do dia:\n${text}`
-    });
+    const now = new Date().toISOString();
+
+const response = await openai.responses.create({
+  model: "gpt-4o-mini",
+  input: `
+Data e hora atual (referência objetiva): ${now}
+
+${SYSTEM_PROMPT}
+
+Relato do dia:
+${text}
+`
+});
+
 
     res.json({
       result: response.output_text
