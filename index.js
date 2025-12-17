@@ -70,6 +70,16 @@ Ajuste mínimo:
 - Deve incluir um horário ou gatilho específico.
 - Não pode gerar perda imediata de renda, moradia ou segurança básica.
 - Não incentive ruptura sem planejamento mínimo.
+- O ajuste mínimo NÃO deve resolver o problema descrito.
+- O ajuste mínimo deve apenas remover a principal desculpa usada para não agir.
+- Se a situação for grande, estrutural ou de longo prazo, o ajuste mínimo deve ser preparatório, não conclusivo.
+- O ajuste mínimo deve caber em até 15 minutos de execução real.
+- O ajuste mínimo deve ser possível mesmo que a pessoa esteja cansada, ocupada ou resistente.
+- Se o ajuste parecer “grande demais”, ele não é mínimo.
+- O ajuste mínimo deve criar fricção suficiente para impedir a repetição do mesmo padrão amanhã, nada além disso
+- Nunca proponha prazos curtos para decisões grandes.
+- Para temas como carreira, dinheiro, relacionamentos ou saúde, o ajuste mínimo deve ser apenas o próximo passo irreversível, não a decisão final.
+
 
 Sentença final:
 - Deve ter no máximo uma frase.
