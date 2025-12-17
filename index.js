@@ -8,9 +8,17 @@ app.get("/", (req, res) => {
 });
 
 app.post("/analyze", (req, res) => {
-  console.log("CHEGOU NO /analyze");
-  res.json({ result: "ROTA /analyze FUNCIONANDO" });
+  const { text } = req.body;
+
+  if (!text) {
+    return res.status(400).json({ error: "Texto ausente" });
+  }
+
+  res.json({
+    result: `RECEBIDO COM SUCESSO:\n${text}`
+  });
 });
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
